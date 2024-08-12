@@ -7,25 +7,29 @@ resilience4j.circuitbreaker:
     default:
       slidingWindowType: COUNT_BASED
       failure-rate-threshold: 50
-      minimum-number-of-calls: 5
+      minimum-number-of-calls: 2
       automatic-transition-from-open-to-half-open-enabled: true
       wait-duration-in-open-state: 5s
       permitted-number-of-calls-in-half-open-state: 3
-      sliding-window-size: 10
+      sliding-window-size: 4
       register-health-indicator: true
 
   instances:
     clientService:
       baseConfig: default
+  circuit-breaker-aspect-order: 1
 
 resilience4j.retry:
   configs:
     default:
-      max-attempts: 2
-      waitDuration: 100
+      max-attempts: 3
+      waitDuration: 200
+      enable-exponential-backoff: true
+      exponential-backoff-multiplier: 3
 
   instances:
     clientService:
       baseConfig: default
+  retry-aspect-order: 2
 
 debug: true

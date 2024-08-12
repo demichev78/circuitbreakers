@@ -46,14 +46,15 @@ public class ClientTest {
 			try {
 				// Act
 				String response = myService.callExternalService(baseUrl);
+				System.out.println("---------One Call Attempt is Complete -----------");
 				// Assert
 				assertEquals("Fallback response", response);
-				Thread.sleep(200);
 			} catch (Exception e) {
 				// Assert
 				System.out.println("Exception: " + e.getMessage());
 			}
 		}
-		assertTrue(mockWebServer.getRequestCount() < 10); // Circuit breaker should have opened so we will get less than 10 retries while a for loop has 50 iterations
+
+		assertTrue(mockWebServer.getRequestCount() < 10);
 	}
 }
