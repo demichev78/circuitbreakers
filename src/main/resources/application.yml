@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: spring-boot-circuit-breaker
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowType: COUNT_BASED
+      failure-rate-threshold: 50
+      minimum-number-of-calls: 5
+      automatic-transition-from-open-to-half-open-enabled: true
+      wait-duration-in-open-state: 5s
+      permitted-number-of-calls-in-half-open-state: 3
+      sliding-window-size: 10
+      register-health-indicator: true
+
+  instances:
+    clientService:
+      baseConfig: default
+
+resilience4j.retry:
+  configs:
+    default:
+      max-attempts: 2
+      waitDuration: 100
+
+  instances:
+    clientService:
+      baseConfig: default
+
+debug: true
